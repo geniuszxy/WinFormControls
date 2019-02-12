@@ -7,46 +7,64 @@ namespace ImageButton
 {
 	public partial class ImageButton : UserControl
 	{
-		public Image Image { get; set; }
+		public Image Image
+		{
+			get { return _image; }
+			set { _image = value; }
+		}
+		private Image _image;
 
-		public bool ResizeImage { get; set; } = true;
+		public bool ResizeImage
+		{
+			get { return _resize; }
+			set { _resize = value; }
+		}
+		private bool _resize = true;
 
 		public Color NormalColor
 		{
-			get { return MatrixToColor(0); }
-			set { ColorToMatrix(0, value); }
+			get { return MatrixToColor(_cmxNormal, _tintAdd); }
+			set { ColorToMatrix(_cmxNormal, value, _tintAdd); }
 		}
+		private ColorMatrix _cmxNormal = new ColorMatrix();
 
 		public Color HoverColor
 		{
-			get { return MatrixToColor(1); }
-			set { ColorToMatrix(1, value); }
+			get { return MatrixToColor(_cmxHover, _tintAdd); }
+			set { ColorToMatrix(_cmxHover, value, _tintAdd); }
 		}
+		private ColorMatrix _cmxHover = new ColorMatrix();
 
 		public Color PressColor
 		{
-			get { return MatrixToColor(2); }
-			set { ColorToMatrix(2, value); }
+			get { return MatrixToColor(_cmxPress, _tintAdd); }
+			set { ColorToMatrix(_cmxPress, value, _tintAdd); }
 		}
+		private ColorMatrix _cmxPress = new ColorMatrix();
 
-		public bool TintAdditive
+		public virtual bool TintAdditive
 		{
-			get { return tintAdditive; }
+			get { return _tintAdd; }
 			set
 			{
-				tintAdditive = value;
-				Array.Clear(colorMatrices, 0, colorMatrices.Length);
+				if (_tintAdd == value)
+					return;
+
+				_tintAdd = value;
+				ChangeAdditive(_cmxNormal, value);
+				ChangeAdditive(_cmxHover, value);
+				ChangeAdditive(_cmxPress, value);
 			}
 		}
+		private bool _tintAdd = false;
 
-		private bool tintAdditive;
-		private ImageAttributes imageAttributes;
-		private ColorMatrix[] colorMatrices;
+		private ImageAttributes imageAttributes = new ImageAttributes();
 
 		public ImageButton()
 		{
-			colorMatrices = new ColorMatrix[ColorCount];
-			imageAttributes = new ImageAttributes();
+			ColorToMatrix(_cmxNormal, Color.Black, _tintAdd);
+			ColorToMatrix(_cmxHover, Color.White, _tintAdd);
+			ColorToMatrix(_cmxPress, Color.Gray, _tintAdd);
 			InitializeComponent();
 		}
 
@@ -56,11 +74,7 @@ namespace ImageButton
 
 			if (Image != null)
 			{
-				var cm = colorMatrices[0];
-				if(cm == null)
-					cm = colorMatrices[0] = new ColorMatrix();
-
-				imageAttributes.SetColorMatrix(cm);
+				imageAttributes.SetColorMatrix(_cmxNormal);
 
 				e.Graphics.DrawImage(
 					Image,
@@ -72,42 +86,70 @@ namespace ImageButton
 			}
 		}
 
-		protected Color MatrixToColor(int index)
+		protected static Color MatrixToColor(ColorMatrix cmx, bool additive)
 		{
-			var cm = colorMatrices[index];
-			if (cm == null)
-				return Color.Black;
-
-			if(tintAdditive)
+			if (additive)
 			{
-
+				return Color.FromArgb(
+					(byte)(cmx.Matrix43 * 255),
+					(byte)(cmx.Matrix40 * 255),
+					(byte)(cmx.Matrix41 * 255),
+					(byte)(cmx.Matrix42 * 255)
+				);
 			}
-
-			return Color.FromArgb(
-				(byte)(cm.Matrix33 * 255),
-				(byte)(cm.Matrix00 * 255),
-				(byte)(cm.Matrix11 * 255),
-				(byte)(cm.Matrix22 * 255)
-			);
+			else
+			{
+				return Color.FromArgb(
+					(byte)(cmx.Matrix33 * 255),
+					(byte)(cmx.Matrix00 * 255),
+					(byte)(cmx.Matrix11 * 255),
+					(byte)(cmx.Matrix22 * 255)
+				);
+			}
 		}
 
-		protected void ColorToMatrix(int index, Color color)
+		protected static void ColorToMatrix(ColorMatrix cmx, Color color, bool additive)
 		{
-			var cm = colorMatrices[index];
-			if (cm == null)
-				cm = colorMatrices[index] = new ColorMatrix();
-
-			if (tintAdditive)
+			if (additive)
 			{
-
+				cmx.Matrix43 = color.A / 255f;
+				cmx.Matrix40 = color.R / 255f;
+				cmx.Matrix41 = color.G / 255f;
+				cmx.Matrix42 = color.B / 255f;
 			}
-
-			cm.Matrix33 = color.A / 255f;
-			cm.Matrix00 = color.R / 255f;
-			cm.Matrix11 = color.G / 255f;
-			cm.Matrix22 = color.B / 255f;
+			else
+			{
+				cmx.Matrix33 = color.A / 255f;
+				cmx.Matrix00 = color.R / 255f;
+				cmx.Matrix11 = color.G / 255f;
+				cmx.Matrix22 = color.B / 255f;
+			}
 		}
 
-		protected virtual int ColorCount { get { return 3; } }
+		protected static void ChangeAdditive(ColorMatrix cmx, bool additive)
+		{
+			if(additive)
+			{
+				cmx.Matrix43 = cmx.Matrix33;
+				cmx.Matrix40 = cmx.Matrix00;
+				cmx.Matrix41 = cmx.Matrix11;
+				cmx.Matrix42 = cmx.Matrix22;
+				cmx.Matrix33 = 1f;
+				cmx.Matrix00 = 1f;
+				cmx.Matrix11 = 1f;
+				cmx.Matrix22 = 1f;
+			}
+			else
+			{
+				cmx.Matrix33 = cmx.Matrix43;
+				cmx.Matrix00 = cmx.Matrix40;
+				cmx.Matrix11 = cmx.Matrix41;
+				cmx.Matrix12 = cmx.Matrix42;
+				cmx.Matrix43 = 1f;
+				cmx.Matrix40 = 1f;
+				cmx.Matrix41 = 1f;
+				cmx.Matrix42 = 1f;
+			}
+		}
 	}
 }

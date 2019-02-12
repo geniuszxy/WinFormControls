@@ -28,39 +28,35 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.imageButton1 = new ImageButton.ImageButton();
 			this.imageButton2 = new ImageButton.ImageButton();
+			this.imageButton1 = new ImageButton.ImageButton();
 			this.SuspendLayout();
-			// 
-			// imageButton1
-			// 
-			this.imageButton1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-			this.imageButton1.HoverColor = System.Drawing.Color.Black;
-			this.imageButton1.Image = global::Test.Properties.Resources._001;
-			this.imageButton1.Location = new System.Drawing.Point(153, 66);
-			this.imageButton1.Name = "imageButton1";
-			this.imageButton1.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-			this.imageButton1.Padding = new System.Windows.Forms.Padding(10);
-			this.imageButton1.PressColor = System.Drawing.Color.Black;
-			this.imageButton1.ResizeImage = true;
-			this.imageButton1.Size = new System.Drawing.Size(61, 58);
-			this.imageButton1.TabIndex = 0;
-			this.imageButton1.TintAdditive = false;
 			// 
 			// imageButton2
 			// 
-			this.imageButton2.BackColor = System.Drawing.SystemColors.ActiveCaption;
-			this.imageButton2.HoverColor = System.Drawing.Color.Black;
+			this.imageButton2.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
 			this.imageButton2.Image = global::Test.Properties.Resources._002;
-			this.imageButton2.Location = new System.Drawing.Point(242, 66);
+			this.imageButton2.Location = new System.Drawing.Point(350, 116);
 			this.imageButton2.Name = "imageButton2";
-			this.imageButton2.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-			this.imageButton2.Padding = new System.Windows.Forms.Padding(10);
-			this.imageButton2.PressColor = System.Drawing.Color.Black;
+			this.imageButton2.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.imageButton2.PressColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
 			this.imageButton2.ResizeImage = true;
-			this.imageButton2.Size = new System.Drawing.Size(61, 58);
+			this.imageButton2.Size = new System.Drawing.Size(150, 150);
 			this.imageButton2.TabIndex = 1;
 			this.imageButton2.TintAdditive = false;
+			// 
+			// imageButton1
+			// 
+			this.imageButton1.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+			this.imageButton1.Image = global::Test.Properties.Resources._001;
+			this.imageButton1.Location = new System.Drawing.Point(107, 116);
+			this.imageButton1.Name = "imageButton1";
+			this.imageButton1.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.imageButton1.PressColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+			this.imageButton1.ResizeImage = true;
+			this.imageButton1.Size = new System.Drawing.Size(150, 150);
+			this.imageButton1.TabIndex = 0;
+			this.imageButton1.TintAdditive = true;
 			// 
 			// Form1
 			// 
@@ -77,8 +73,8 @@
 
 		#endregion
 
-		private ImageButton.ImageButton imageButton1;
 		private ImageButton.ImageButton imageButton2;
+		private ImageButton.ImageButton imageButton1;
 	}
 }
 
