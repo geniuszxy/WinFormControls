@@ -34,27 +34,27 @@
 			// 
 			// imageButton2
 			// 
-			this.imageButton2.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+			this.imageButton2.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
 			this.imageButton2.Image = global::Test.Properties.Resources._002;
-			this.imageButton2.Location = new System.Drawing.Point(350, 116);
+			this.imageButton2.Location = new System.Drawing.Point(190, 12);
 			this.imageButton2.Name = "imageButton2";
-			this.imageButton2.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
+			this.imageButton2.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
 			this.imageButton2.PressColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-			this.imageButton2.ResizeImage = true;
-			this.imageButton2.Size = new System.Drawing.Size(150, 150);
+			this.imageButton2.ResizeImage = false;
+			this.imageButton2.Size = new System.Drawing.Size(84, 85);
 			this.imageButton2.TabIndex = 1;
 			this.imageButton2.TintAdditive = false;
 			// 
 			// imageButton1
 			// 
-			this.imageButton1.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+			this.imageButton1.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
 			this.imageButton1.Image = global::Test.Properties.Resources._001;
-			this.imageButton1.Location = new System.Drawing.Point(107, 116);
+			this.imageButton1.Location = new System.Drawing.Point(12, 12);
 			this.imageButton1.Name = "imageButton1";
-			this.imageButton1.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			this.imageButton1.PressColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+			this.imageButton1.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+			this.imageButton1.PressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
 			this.imageButton1.ResizeImage = true;
-			this.imageButton1.Size = new System.Drawing.Size(150, 150);
+			this.imageButton1.Size = new System.Drawing.Size(143, 283);
 			this.imageButton1.TabIndex = 0;
 			this.imageButton1.TintAdditive = true;
 			// 

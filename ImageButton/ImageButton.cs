@@ -10,35 +10,43 @@ namespace ImageButton
 		public Image Image
 		{
 			get { return _image; }
-			set { _image = value; }
+			set
+			{
+				_image = value;
+				RefreshDrawRect();
+			}
 		}
 		private Image _image;
 
 		public bool ResizeImage
 		{
 			get { return _resize; }
-			set { _resize = value; }
+			set
+			{
+				_resize = value;
+				RefreshDrawRect();
+			}
 		}
 		private bool _resize = true;
 
 		public Color NormalColor
 		{
-			get { return MatrixToColor(_cmxNormal, _tintAdd); }
-			set { ColorToMatrix(_cmxNormal, value, _tintAdd); }
+			get { return MatrixToColor(_cmxNormal); }
+			set { ColorToMatrix(_cmxNormal, value); }
 		}
 		private ColorMatrix _cmxNormal = new ColorMatrix();
 
 		public Color HoverColor
 		{
-			get { return MatrixToColor(_cmxHover, _tintAdd); }
-			set { ColorToMatrix(_cmxHover, value, _tintAdd); }
+			get { return MatrixToColor(_cmxHover); }
+			set { ColorToMatrix(_cmxHover, value); }
 		}
 		private ColorMatrix _cmxHover = new ColorMatrix();
 
 		public Color PressColor
 		{
-			get { return MatrixToColor(_cmxPress, _tintAdd); }
-			set { ColorToMatrix(_cmxPress, value, _tintAdd); }
+			get { return MatrixToColor(_cmxPress); }
+			set { ColorToMatrix(_cmxPress, value); }
 		}
 		private ColorMatrix _cmxPress = new ColorMatrix();
 
@@ -51,20 +59,19 @@ namespace ImageButton
 					return;
 
 				_tintAdd = value;
-				ChangeAdditive(_cmxNormal, value);
-				ChangeAdditive(_cmxHover, value);
-				ChangeAdditive(_cmxPress, value);
+				ChangeAdditive(_cmxNormal);
+				ChangeAdditive(_cmxHover);
+				ChangeAdditive(_cmxPress);
+				Invalidate();
 			}
 		}
 		private bool _tintAdd = false;
 
-		private ImageAttributes imageAttributes = new ImageAttributes();
+		private ImageAttributes _imgAttrs = new ImageAttributes();
+		private Rectangle _rDest;
 
 		public ImageButton()
 		{
-			ColorToMatrix(_cmxNormal, Color.Black, _tintAdd);
-			ColorToMatrix(_cmxHover, Color.White, _tintAdd);
-			ColorToMatrix(_cmxPress, Color.Gray, _tintAdd);
 			InitializeComponent();
 		}
 
@@ -74,78 +81,156 @@ namespace ImageButton
 
 			if (Image != null)
 			{
-				imageAttributes.SetColorMatrix(_cmxNormal);
-
 				e.Graphics.DrawImage(
 					Image,
-					new Rectangle(0, 0, Width, Height),
+					_rDest,
 					0, 0, Image.Width, Image.Height,
 					GraphicsUnit.Pixel,
-					imageAttributes
+					_imgAttrs
 				);
 			}
 		}
 
-		protected static Color MatrixToColor(ColorMatrix cmx, bool additive)
+		protected override void OnMouseDown(MouseEventArgs e)
 		{
-			if (additive)
+			SetColorMatrix(_cmxPress);
+			base.OnMouseDown(e);
+		}
+
+		protected override void OnMouseUp(MouseEventArgs e)
+		{
+			SetColorMatrix(_cmxHover);
+			base.OnMouseUp(e);
+		}
+
+		protected override void OnMouseEnter(EventArgs e)
+		{
+			SetColorMatrix(_cmxHover);
+			base.OnMouseEnter(e);
+		}
+
+		protected override void OnMouseLeave(EventArgs e)
+		{
+			SetColorMatrix(_cmxNormal);
+			base.OnMouseLeave(e);
+		}
+
+		protected override void OnLoad(EventArgs e)
+		{
+			base.OnLoad(e);
+			_imgAttrs.SetColorMatrix(_cmxNormal);
+		}
+
+		protected override void OnResize(EventArgs e)
+		{
+			base.OnResize(e);
+			RefreshDrawRect();
+		}
+
+		protected override void OnPaddingChanged(EventArgs e)
+		{
+			base.OnPaddingChanged(e);
+			RefreshDrawRect();
+		}
+
+		protected void SetColorMatrix(ColorMatrix cmx)
+		{
+			_imgAttrs.SetColorMatrix(cmx);
+			Invalidate();
+		}
+
+		private void RefreshDrawRect()
+		{
+			if (_image == null)
+				return;
+
+			var pad = Padding;
+			int imgW = _image.Width;
+			int imgH = _image.Height;
+			int cW = Width - pad.Horizontal;
+			int cH = Height - pad.Vertical;
+
+			if (_resize)
+			{
+				if (cW <= 0 || cH <= 0)
+				{
+					_rDest = new Rectangle();
+					Invalidate();
+					return;
+				}
+
+				double sw = (double)imgW / cW;
+				double sh = (double)imgH / cH;
+				if (sw < sh)
+					sw = sh;
+				imgW = (int)Math.Round(imgW / sw);
+				imgH = (int)Math.Round(imgH / sw);
+			}
+
+			_rDest = new Rectangle(
+				pad.Left + (cW - imgW) / 2,
+				pad.Top + (cH - imgH) / 2,
+				imgW,
+				imgH
+			);
+
+			Invalidate();
+		}
+
+		protected Color MatrixToColor(ColorMatrix cmx)
+		{
+			if (_tintAdd)
 			{
 				return Color.FromArgb(
-					(byte)(cmx.Matrix43 * 255),
-					(byte)(cmx.Matrix40 * 255),
-					(byte)(cmx.Matrix41 * 255),
-					(byte)(cmx.Matrix42 * 255)
+					(int)(cmx.Matrix40 * 255),
+					(int)(cmx.Matrix41 * 255),
+					(int)(cmx.Matrix42 * 255)
 				);
 			}
 			else
 			{
 				return Color.FromArgb(
-					(byte)(cmx.Matrix33 * 255),
-					(byte)(cmx.Matrix00 * 255),
-					(byte)(cmx.Matrix11 * 255),
-					(byte)(cmx.Matrix22 * 255)
+					(int)(cmx.Matrix00 * 255),
+					(int)(cmx.Matrix11 * 255),
+					(int)(cmx.Matrix22 * 255)
 				);
 			}
 		}
 
-		protected static void ColorToMatrix(ColorMatrix cmx, Color color, bool additive)
+		protected void ColorToMatrix(ColorMatrix cmx, Color color)
 		{
-			if (additive)
+			if (_tintAdd)
 			{
-				cmx.Matrix43 = color.A / 255f;
 				cmx.Matrix40 = color.R / 255f;
 				cmx.Matrix41 = color.G / 255f;
 				cmx.Matrix42 = color.B / 255f;
 			}
 			else
 			{
-				cmx.Matrix33 = color.A / 255f;
 				cmx.Matrix00 = color.R / 255f;
 				cmx.Matrix11 = color.G / 255f;
 				cmx.Matrix22 = color.B / 255f;
 			}
+
+			Invalidate();
 		}
 
-		protected static void ChangeAdditive(ColorMatrix cmx, bool additive)
+		protected void ChangeAdditive(ColorMatrix cmx)
 		{
-			if(additive)
+			if(_tintAdd)
 			{
-				cmx.Matrix43 = cmx.Matrix33;
 				cmx.Matrix40 = cmx.Matrix00;
 				cmx.Matrix41 = cmx.Matrix11;
 				cmx.Matrix42 = cmx.Matrix22;
-				cmx.Matrix33 = 1f;
 				cmx.Matrix00 = 1f;
 				cmx.Matrix11 = 1f;
 				cmx.Matrix22 = 1f;
 			}
 			else
 			{
-				cmx.Matrix33 = cmx.Matrix43;
 				cmx.Matrix00 = cmx.Matrix40;
 				cmx.Matrix11 = cmx.Matrix41;
 				cmx.Matrix12 = cmx.Matrix42;
-				cmx.Matrix43 = 1f;
 				cmx.Matrix40 = 1f;
 				cmx.Matrix41 = 1f;
 				cmx.Matrix42 = 1f;
