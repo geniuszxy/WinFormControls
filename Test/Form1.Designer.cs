@@ -36,7 +36,7 @@
 			// 
 			this.imageButton2.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
 			this.imageButton2.Image = global::Test.Properties.Resources._002;
-			this.imageButton2.Location = new System.Drawing.Point(190, 12);
+			this.imageButton2.Location = new System.Drawing.Point(418, 12);
 			this.imageButton2.Name = "imageButton2";
 			this.imageButton2.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
 			this.imageButton2.PressColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));

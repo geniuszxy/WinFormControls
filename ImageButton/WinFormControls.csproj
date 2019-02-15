@@ -7,8 +7,8 @@
     <ProjectGuid>{39AFE60E-DE3F-49A2-96A4-B44EBE0AA24E}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>ImageButton</RootNamespace>
-    <AssemblyName>ImageButton</AssemblyName>
+    <RootNamespace>WinFormControls</RootNamespace>
+    <AssemblyName>WinFormControls</AssemblyName>
     <TargetFrameworkVersion>v4.6.1</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
@@ -43,10 +43,10 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="ImageButton.cs">
+    <Compile Include="ImageButton\ImageButton.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ImageButton.Designer.cs">
+    <Compile Include="ImageButton\ImageButton.Designer.cs">
       <DependentUpon>ImageButton.cs</DependentUpon>
     </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />

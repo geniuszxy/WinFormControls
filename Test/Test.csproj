@@ -81,12 +81,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\ImageButton\ImageButton.csproj">
-      <Project>{39afe60e-de3f-49a2-96a4-b44ebe0aa24e}</Project>
-      <Name>ImageButton</Name>
-    </ProjectReference>
-  </ItemGroup>
-  <ItemGroup>
     <None Include="Resources\001.png" />
   </ItemGroup>
   <ItemGroup>

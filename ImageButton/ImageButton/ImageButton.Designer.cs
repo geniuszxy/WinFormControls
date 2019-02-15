@@ -1,4 +1,4 @@
-﻿namespace ImageButton
+﻿namespace WinFormControls
 {
 	partial class ImageButton
 	{
