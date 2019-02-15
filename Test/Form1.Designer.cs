@@ -28,15 +28,15 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.imageButton2 = new ImageButton.ImageButton();
-			this.imageButton1 = new ImageButton.ImageButton();
+			this.imageButton2 = new WinFormControls.ImageButton();
+			this.imageButton1 = new WinFormControls.ImageButton();
 			this.SuspendLayout();
 			// 
 			// imageButton2
 			// 
 			this.imageButton2.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
 			this.imageButton2.Image = global::Test.Properties.Resources._002;
-			this.imageButton2.Location = new System.Drawing.Point(418, 12);
+			this.imageButton2.Location = new System.Drawing.Point(211, 36);
 			this.imageButton2.Name = "imageButton2";
 			this.imageButton2.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
 			this.imageButton2.PressColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
@@ -49,12 +49,13 @@
 			// 
 			this.imageButton1.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
 			this.imageButton1.Image = global::Test.Properties.Resources._001;
-			this.imageButton1.Location = new System.Drawing.Point(12, 12);
+			this.imageButton1.Location = new System.Drawing.Point(12, 128);
 			this.imageButton1.Name = "imageButton1";
 			this.imageButton1.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
+			this.imageButton1.Padding = new System.Windows.Forms.Padding(20);
 			this.imageButton1.PressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
 			this.imageButton1.ResizeImage = true;
-			this.imageButton1.Size = new System.Drawing.Size(143, 283);
+			this.imageButton1.Size = new System.Drawing.Size(139, 167);
 			this.imageButton1.TabIndex = 0;
 			this.imageButton1.TintAdditive = true;
 			// 
@@ -73,8 +74,8 @@
 
 		#endregion
 
-		private ImageButton.ImageButton imageButton2;
-		private ImageButton.ImageButton imageButton1;
+		private WinFormControls.ImageButton imageButton2;
+		private WinFormControls.ImageButton imageButton1;
 	}
 }
 

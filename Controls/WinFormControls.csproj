@@ -49,6 +49,12 @@
     <Compile Include="ImageButton\ImageButton.Designer.cs">
       <DependentUpon>ImageButton.cs</DependentUpon>
     </Compile>
+    <Compile Include="ImageCheckbox\ImageCheckbox.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="ImageCheckbox\ImageCheckbox.Designer.cs">
+      <DependentUpon>ImageCheckbox.cs</DependentUpon>
+    </Compile>
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

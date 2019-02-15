@@ -86,5 +86,11 @@
   <ItemGroup>
     <Content Include="Resources\002.png" />
   </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Controls\WinFormControls.csproj">
+      <Project>{39afe60e-de3f-49a2-96a4-b44ebe0aa24e}</Project>
+      <Name>WinFormControls</Name>
+    </ProjectReference>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
