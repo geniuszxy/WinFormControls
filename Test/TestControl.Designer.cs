@@ -1,6 +1,6 @@
-﻿namespace WinFormControls
+﻿namespace Test
 {
-	partial class ImageButton
+	partial class TestControl
 	{
 		/// <summary> 
 		/// 必需的设计器变量。
@@ -28,16 +28,8 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.SuspendLayout();
-			// 
-			// ImageButton
-			// 
-			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+			components = new System.ComponentModel.Container();
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.Name = "ImageButton";
-			this.Size = new System.Drawing.Size(64, 64);
-			this.ResumeLayout(false);
-
 		}
 
 		#endregion

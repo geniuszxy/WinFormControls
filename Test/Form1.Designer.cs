@@ -28,43 +28,22 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.imageButton2 = new WinFormControls.ImageButton();
 			this.imageButton1 = new WinFormControls.ImageButton();
 			this.SuspendLayout();
 			// 
-			// imageButton2
-			// 
-			this.imageButton2.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			this.imageButton2.Image = global::Test.Properties.Resources._002;
-			this.imageButton2.Location = new System.Drawing.Point(211, 36);
-			this.imageButton2.Name = "imageButton2";
-			this.imageButton2.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
-			this.imageButton2.PressColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-			this.imageButton2.ResizeImage = false;
-			this.imageButton2.Size = new System.Drawing.Size(84, 85);
-			this.imageButton2.TabIndex = 1;
-			this.imageButton2.TintAdditive = false;
-			// 
 			// imageButton1
 			// 
-			this.imageButton1.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
-			this.imageButton1.Image = global::Test.Properties.Resources._001;
-			this.imageButton1.Location = new System.Drawing.Point(12, 128);
+			this.imageButton1.BackColor = System.Drawing.SystemColors.ActiveCaption;
+			this.imageButton1.Location = new System.Drawing.Point(43, 103);
 			this.imageButton1.Name = "imageButton1";
-			this.imageButton1.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-			this.imageButton1.Padding = new System.Windows.Forms.Padding(20);
-			this.imageButton1.PressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
-			this.imageButton1.ResizeImage = true;
-			this.imageButton1.Size = new System.Drawing.Size(139, 167);
+			this.imageButton1.Size = new System.Drawing.Size(64, 64);
 			this.imageButton1.TabIndex = 0;
-			this.imageButton1.TintAdditive = true;
 			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(800, 450);
-			this.Controls.Add(this.imageButton2);
 			this.Controls.Add(this.imageButton1);
 			this.Name = "Form1";
 			this.Text = "Form1";
@@ -74,7 +53,6 @@
 
 		#endregion
 
-		private WinFormControls.ImageButton imageButton2;
 		private WinFormControls.ImageButton imageButton1;
 	}
 }
