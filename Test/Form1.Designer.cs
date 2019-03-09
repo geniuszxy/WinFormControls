@@ -33,8 +33,7 @@
 			// 
 			// imageButton1
 			// 
-			this.imageButton1.BackColor = System.Drawing.SystemColors.ActiveCaption;
-			this.imageButton1.Location = new System.Drawing.Point(43, 103);
+			this.imageButton1.Location = new System.Drawing.Point(210, 187);
 			this.imageButton1.Name = "imageButton1";
 			this.imageButton1.Size = new System.Drawing.Size(64, 64);
 			this.imageButton1.TabIndex = 0;
