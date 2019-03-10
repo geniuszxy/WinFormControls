@@ -28,22 +28,13 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.imageButton1 = new WinFormControls.ImageButton();
 			this.SuspendLayout();
-			// 
-			// imageButton1
-			// 
-			this.imageButton1.Location = new System.Drawing.Point(210, 187);
-			this.imageButton1.Name = "imageButton1";
-			this.imageButton1.Size = new System.Drawing.Size(64, 64);
-			this.imageButton1.TabIndex = 0;
 			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(800, 450);
-			this.Controls.Add(this.imageButton1);
 			this.Name = "Form1";
 			this.Text = "Form1";
 			this.ResumeLayout(false);
@@ -51,8 +42,6 @@
 		}
 
 		#endregion
-
-		private WinFormControls.ImageButton imageButton1;
 	}
 }
 

@@ -9,6 +9,7 @@ using System.Windows.Forms;
 
 namespace WinFormControls
 {
+	[DefaultProperty("NormalState")]
 	public partial class ImageButton : UserControl
 	{
 		#region State
@@ -136,7 +137,7 @@ namespace WinFormControls
 				if(destinationType == typeof(InstanceDescriptor))
 				{
 					var ctor = typeof(State).GetConstructor(new Type[] { typeof(int), typeof(Image) });
-					if(ctor != null)
+					if (ctor != null)
 					{
 						var state = (State)value;
 						return new InstanceDescriptor(ctor, new object[] { state.GetData(), state.Image });
@@ -392,16 +393,16 @@ namespace WinFormControls
 			if ((data & State.MaskTintAdditive) != 0)
 			{
 				mx.Matrix00 = mx.Matrix11 = mx.Matrix22 = 1;
-				mx.Matrix04 = r;
-				mx.Matrix14 = g;
-				mx.Matrix24 = b;
+				mx.Matrix40 = r;
+				mx.Matrix41 = g;
+				mx.Matrix42 = b;
 			}
 			else
 			{
 				mx.Matrix00 = r;
 				mx.Matrix11 = g;
 				mx.Matrix22 = b;
-				mx.Matrix04 = mx.Matrix14 = mx.Matrix24 = 0;
+				mx.Matrix40 = mx.Matrix41 = mx.Matrix42 = 0;
 			}
 
 			_imgAttrs.SetColorMatrix(mx);
