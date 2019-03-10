@@ -132,15 +132,16 @@ namespace WinFormControls
 
 			public override object ConvertTo(ITypeDescriptorContext context, CultureInfo culture, object value, Type destinationType)
 			{
-				if (destinationType == typeof(string))
-					return string.Empty;
-				if(destinationType == typeof(InstanceDescriptor))
+				if (value is State)
 				{
-					var ctor = typeof(State).GetConstructor(new Type[] { typeof(int), typeof(Image) });
-					if (ctor != null)
+					if (destinationType == typeof(string))
+						return string.Empty;
+					if (destinationType == typeof(InstanceDescriptor))
 					{
 						var state = (State)value;
-						return new InstanceDescriptor(ctor, new object[] { state.GetData(), state.Image });
+						var ctor = typeof(State).GetConstructor(new Type[] { typeof(int), typeof(Image) });
+						if (ctor != null)
+							return new InstanceDescriptor(ctor, new object[] { state.GetData(), state.Image });
 					}
 				}
 				return base.ConvertTo(context, culture, value, destinationType);
@@ -240,13 +241,13 @@ namespace WinFormControls
 
 		public ImageButton()
 		{
-			InitializeComponent();
-
 			//initialize states
 			int stateCount = StateCount;
 			_baseData = new int[stateCount];
 			_imageStates = null;
 			_currentState = 0;
+
+			InitializeComponent();
 		}
 
 		/// <summary>
@@ -263,8 +264,8 @@ namespace WinFormControls
 
 		protected override void OnLoad(EventArgs e)
 		{
+			UpdateBackColor();
 			base.OnLoad(e);
-			Invalidate();
 		}
 
 		protected override void OnPaint(PaintEventArgs e)
@@ -379,6 +380,7 @@ namespace WinFormControls
 				return;
 
 			_currentState = index;
+			UpdateBackColor();
 			Invalidate();
 		}
 
@@ -430,7 +432,21 @@ namespace WinFormControls
 
 		private void RefreshDrawRect()
 		{
+			var stateCount = StateCount;
+			for (int i = 0; i < stateCount; i++)
+				_baseData[i] |= State.MaskSizeDirty;
+			Invalidate();
+		}
 
+		private void UpdateBackColor()
+		{
+			int index = _currentState;
+			var data = _baseData[index];
+
+			if ((data & State.MaskApplyBackColor) != 0) //apply back color
+				BackColor = i2c((data & State.MaskBackColor) >> 12);
+			else if (index == 0) //set back to normal state
+				_baseData[0] = (data & ~State.MaskBackColor) | (c2i(BackColor) << 12) | State.MaskApplyBackColor;
 		}
 
 		private void RefreshDrawRect(_ImageState state, bool resize)
