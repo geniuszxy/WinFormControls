@@ -9,11 +9,17 @@ using System.Windows.Forms;
 
 namespace WinFormControls
 {
+	/// <summary>
+	/// A button with image
+	/// </summary>
 	[DefaultProperty("NormalState")]
-	public partial class ImageButton : UserControl
+	public class ImageButton : UserControl
 	{
 		#region State
 
+		/// <summary>
+		/// Main state to modify in properties
+		/// </summary>
 		[TypeConverter(typeof(StateConverter))]
 		public struct State
 		{
@@ -49,7 +55,10 @@ namespace WinFormControls
 				_image = image;
 			}
 
-			//[DefaultValue(false)]
+			/// <summary>
+			/// Whether the image should be resized to fit the control size
+			/// </summary>
+			[Description("Whether the image should be resized to fit the control size")]
 			public bool ResizeImage
 			{
 				get { return (_data & MaskResizeImage) != 0; }
@@ -63,7 +72,10 @@ namespace WinFormControls
 				}
 			}
 
-			//[DefaultValue(false)]
+			/// <summary>
+			/// Whether the ImageColor should be addtive or multiply to the image
+			/// </summary>
+			[Description("Whether the ImageColor should be addtive or multiply to the image")]
 			public bool TintAdditive
 			{
 				get { return (_data & MaskTintAdditive) != 0; }
@@ -76,7 +88,10 @@ namespace WinFormControls
 				}
 			}
 
-			//[DefaultValue(null)]
+			/// <summary>
+			/// Image of the state, if not set the image in the first state will be used
+			/// </summary>
+			[Description("The image of the state, if not set the image in the first state will be used")]
 			public Image Image
 			{
 				get { return _image; }
@@ -89,13 +104,20 @@ namespace WinFormControls
 				}
 			}
 
+			/// <summary>
+			/// Addtional color of the image
+			/// </summary>
+			[Description("The addtional color of the image")]
 			public Color ImageColor
 			{
 				get { return i2c(_data & MaskImageColor); }
 				set { _data = (_data & ~MaskImageColor) | c2i(value); }
 			}
-			//private bool ShouldSerializeImageColor() { return (_data & MaskImageColor) != 0; }
 
+			/// <summary>
+			/// Background color of the state
+			/// </summary>
+			[Description("Background color of the state")]
 			public Color BackColor
 			{
 				get
@@ -169,6 +191,7 @@ namespace WinFormControls
 			}
 		}
 
+		//Convert int(12 bits) to Color
 		private static Color i2c(int i)
 		{
 			int r = i & 0xf00;
@@ -180,12 +203,16 @@ namespace WinFormControls
 				(b << 4) | b);
 		}
 
+		//Convert Color to int(12 bits)
 		private static int c2i(Color c)
 		{
 			int i = c.ToArgb();
 			return ((i & 0xf00000) >> 12) | ((i & 0xf000) >> 8) | ((i & 0xf0) >> 4);
 		}
 
+		/// <summary>
+		/// An extra state for
+		/// </summary>
 		private class _ImageState
 		{
 			public Image image;
@@ -196,7 +223,11 @@ namespace WinFormControls
 
 		#region Properties
 
-		[Category("Image Button")]
+		/// <summary>
+		/// The normal state
+		/// </summary>
+		[Category("Image Button States")]
+		[DisplayName("Normal")]
 		public State NormalState
 		{
 			get { return GetState(0); }
@@ -205,7 +236,8 @@ namespace WinFormControls
 		private void ResetNormalState() { _ResetState(0); }
 		private bool ShouldSerializeNormalState() { return _ShouldSerializeState(0); }
 
-		[Category("Image Button")]
+		[Category("Image Button States")]
+		[DisplayName("Hover")]
 		public State HoverState
 		{
 			get { return GetState(1); }
@@ -214,7 +246,8 @@ namespace WinFormControls
 		private void ResetHoverState() { _ResetState(1); }
 		private bool ShouldSerializeHoverState() { return _ShouldSerializeState(1); }
 
-		[Category("Image Button")]
+		[Category("Image Button States")]
+		[DisplayName("Press")]
 		public State PressState
 		{
 			get { return GetState(2); }
@@ -222,6 +255,30 @@ namespace WinFormControls
 		}
 		private void ResetPressState() { _ResetState(2); }
 		private bool ShouldSerializePressState() { return _ShouldSerializeState(2); }
+
+		//Override BackColor, to represent the background color of the current state
+		[Browsable(false)]
+		public override Color BackColor
+		{
+			get
+			{
+				int index = _currentState;
+				var data = _baseData[index];
+
+				if ((data & State.MaskApplyBackColor) != 0) //apply back color
+					return i2c((data & State.MaskBackColor) >> 12);
+				else
+					return DefaultBackColor;
+			}
+
+			set
+			{
+				int index = _currentState;
+				var st = GetState(index);
+				st.BackColor = value;
+				SetState(index, st);
+			}
+		}
 
 		#endregion Properties
 
@@ -247,7 +304,8 @@ namespace WinFormControls
 			_imageStates = null;
 			_currentState = 0;
 
-			InitializeComponent();
+			//init size
+			Size = new Size(50, 50);
 		}
 
 		/// <summary>
@@ -261,12 +319,6 @@ namespace WinFormControls
 		#endregion Main
 
 		#region Events
-
-		protected override void OnLoad(EventArgs e)
-		{
-			UpdateBackColor();
-			base.OnLoad(e);
-		}
 
 		protected override void OnPaint(PaintEventArgs e)
 		{
@@ -321,7 +373,10 @@ namespace WinFormControls
 
 		#region Utilities
 
-		private State GetState(int index)
+		/// <summary>
+		/// Get a state object at the specific index
+		/// </summary>
+		protected State GetState(int index)
 		{
 			var imageStates = _imageStates;
 			var image = imageStates != null && index < imageStates.Length ?
@@ -329,7 +384,10 @@ namespace WinFormControls
 			return new State(_baseData[index], image);
 		}
 
-		private void SetState(int index, State state)
+		/// <summary>
+		/// Set a state object at the specific index
+		/// </summary>
+		protected void SetState(int index, State state)
 		{
 			int data = state.GetData();
 			var imageStates = _imageStates;
@@ -374,13 +432,15 @@ namespace WinFormControls
 				Invalidate();
 		}
 
-		private void ChangeCurrentState(int index)
+		/// <summary>
+		/// Change the current state
+		/// </summary>
+		protected void ChangeCurrentState(int index)
 		{
 			if (_currentState == index)
 				return;
 
 			_currentState = index;
-			UpdateBackColor();
 			Invalidate();
 		}
 
@@ -410,6 +470,9 @@ namespace WinFormControls
 			_imgAttrs.SetColorMatrix(mx);
 		}
 
+		/// <summary>
+		/// Get the current or the first image and its rectangle
+		/// </summary>
 		private _ImageState GetImageState()
 		{
 			var states = _imageStates;
@@ -430,6 +493,9 @@ namespace WinFormControls
 			return state;
 		}
 
+		/// <summary>
+		/// Mark all states as size dirty
+		/// </summary>
 		private void RefreshDrawRect()
 		{
 			var stateCount = StateCount;
@@ -438,17 +504,9 @@ namespace WinFormControls
 			Invalidate();
 		}
 
-		private void UpdateBackColor()
-		{
-			int index = _currentState;
-			var data = _baseData[index];
-
-			if ((data & State.MaskApplyBackColor) != 0) //apply back color
-				BackColor = i2c((data & State.MaskBackColor) >> 12);
-			else if (index == 0) //set back to normal state
-				_baseData[0] = (data & ~State.MaskBackColor) | (c2i(BackColor) << 12) | State.MaskApplyBackColor;
-		}
-
+		/// <summary>
+		/// Compute the rectangle of the image
+		/// </summary>
 		private void RefreshDrawRect(_ImageState state, bool resize)
 		{
 			Image image = state.image;
@@ -485,7 +543,7 @@ namespace WinFormControls
 			);
 		}
 
-		private void _ResetState(int index)
+		protected void _ResetState(int index)
 		{
 			_baseData[index] = 0;
 
@@ -494,7 +552,7 @@ namespace WinFormControls
 				imgStates[index].image = null;
 		}
 
-		private bool _ShouldSerializeState(int index)
+		protected bool _ShouldSerializeState(int index)
 		{
 			if (_baseData[index] != 0)
 				return true;

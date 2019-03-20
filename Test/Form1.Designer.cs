@@ -28,24 +28,38 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
 			this.imageButton1 = new WinFormControls.ImageButton();
+			this.imageCheckbox1 = new WinFormControls.ImageCheckbox();
 			this.SuspendLayout();
 			// 
 			// imageButton1
 			// 
-			this.imageButton1.HoverState = new WinFormControls.ImageButton.State(-1326448385, null);
-			this.imageButton1.Location = new System.Drawing.Point(210, 92);
+			this.imageButton1.HoverState = new WinFormControls.ImageButton.State(268435456, null);
+			this.imageButton1.Location = new System.Drawing.Point(73, 12);
 			this.imageButton1.Name = "imageButton1";
-			this.imageButton1.NormalState = new WinFormControls.ImageButton.State(-1609625616, global::Test.Properties.Resources._001);
-			this.imageButton1.PressState = new WinFormControls.ImageButton.State(268435456, null);
-			this.imageButton1.Size = new System.Drawing.Size(64, 64);
+			this.imageButton1.NormalState = new WinFormControls.ImageButton.State(-1594880016, global::Test.Properties.Resources._001);
+			this.imageButton1.PressState = new WinFormControls.ImageButton.State(-1879047952, null);
+			this.imageButton1.Size = new System.Drawing.Size(48, 50);
 			this.imageButton1.TabIndex = 0;
+			// 
+			// imageCheckbox1
+			// 
+			this.imageCheckbox1.Checked = false;
+			this.imageCheckbox1.CheckedState = new WinFormControls.ImageButton.State(268438732, null);
+			this.imageCheckbox1.HoverState = new WinFormControls.ImageButton.State(268439296, null);
+			this.imageCheckbox1.Location = new System.Drawing.Point(354, 156);
+			this.imageCheckbox1.Name = "imageCheckbox1";
+			this.imageCheckbox1.NormalState = new WinFormControls.ImageButton.State(0, ((System.Drawing.Image)(resources.GetObject("imageCheckbox1.NormalState"))));
+			this.imageCheckbox1.Size = new System.Drawing.Size(150, 150);
+			this.imageCheckbox1.TabIndex = 1;
 			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
 			this.ClientSize = new System.Drawing.Size(800, 450);
+			this.Controls.Add(this.imageCheckbox1);
 			this.Controls.Add(this.imageButton1);
 			this.Name = "Form1";
 			this.Text = "Form1";
@@ -56,6 +70,7 @@
 		#endregion
 
 		private WinFormControls.ImageButton imageButton1;
+		private WinFormControls.ImageCheckbox imageCheckbox1;
 	}
 }
 
