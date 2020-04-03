@@ -29,7 +29,6 @@
 		private void InitializeComponent()
 		{
 			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
-<<<<<<< HEAD
 			this.button1 = new System.Windows.Forms.Button();
 			this.autoScrollTextBox1 = new WinFormControls.AutoScrollTextBox();
 			this.SuspendLayout();
@@ -57,46 +56,14 @@
 			this.autoScrollTextBox1.Size = new System.Drawing.Size(265, 163);
 			this.autoScrollTextBox1.TabIndex = 0;
 			this.autoScrollTextBox1.Text = resources.GetString("autoScrollTextBox1.Text");
-=======
-			this.imageButton1 = new WinFormControls.ImageButton();
-			this.imageCheckbox1 = new WinFormControls.ImageCheckbox();
-			this.SuspendLayout();
-			// 
-			// imageButton1
-			// 
-			this.imageButton1.HoverState = new WinFormControls.ImageButton.State(268435456, null);
-			this.imageButton1.Location = new System.Drawing.Point(73, 12);
-			this.imageButton1.Name = "imageButton1";
-			this.imageButton1.NormalState = new WinFormControls.ImageButton.State(-1594880016, global::Test.Properties.Resources._001);
-			this.imageButton1.PressState = new WinFormControls.ImageButton.State(-1879047952, null);
-			this.imageButton1.Size = new System.Drawing.Size(48, 50);
-			this.imageButton1.TabIndex = 0;
-			// 
-			// imageCheckbox1
-			// 
-			this.imageCheckbox1.Checked = false;
-			this.imageCheckbox1.CheckedState = new WinFormControls.ImageButton.State(268438732, null);
-			this.imageCheckbox1.HoverState = new WinFormControls.ImageButton.State(268439296, null);
-			this.imageCheckbox1.Location = new System.Drawing.Point(354, 156);
-			this.imageCheckbox1.Name = "imageCheckbox1";
-			this.imageCheckbox1.NormalState = new WinFormControls.ImageButton.State(0, ((System.Drawing.Image)(resources.GetObject("imageCheckbox1.NormalState"))));
-			this.imageCheckbox1.Size = new System.Drawing.Size(150, 150);
-			this.imageCheckbox1.TabIndex = 1;
->>>>>>> 04dca1956c81afb3f69fa8a31e7650d93d3eafe6
 			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-<<<<<<< HEAD
 			this.ClientSize = new System.Drawing.Size(265, 163);
 			this.Controls.Add(this.button1);
 			this.Controls.Add(this.autoScrollTextBox1);
-=======
-			this.ClientSize = new System.Drawing.Size(800, 450);
-			this.Controls.Add(this.imageCheckbox1);
-			this.Controls.Add(this.imageButton1);
->>>>>>> 04dca1956c81afb3f69fa8a31e7650d93d3eafe6
 			this.Name = "Form1";
 			this.Text = "Form1";
 			this.ResumeLayout(false);
@@ -106,13 +73,8 @@
 
 		#endregion
 
-<<<<<<< HEAD
 		private WinFormControls.AutoScrollTextBox autoScrollTextBox1;
 		private System.Windows.Forms.Button button1;
-=======
-		private WinFormControls.ImageButton imageButton1;
-		private WinFormControls.ImageCheckbox imageCheckbox1;
->>>>>>> 04dca1956c81afb3f69fa8a31e7650d93d3eafe6
 	}
 }
 

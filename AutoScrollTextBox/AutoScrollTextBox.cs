@@ -47,12 +47,6 @@ namespace WinFormControls
 			}
 		}
 
-		protected override void OnHandleCreated(EventArgs e)
-		{
-			CheckScrollBars();
-			base.OnHandleCreated(e);
-		}
-
 		protected override void OnTextChanged(EventArgs e)
 		{
 			CheckScrollBars();
