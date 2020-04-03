@@ -7,13 +7,17 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+<<<<<<< HEAD
 using System.Globalization;
 using System.ComponentModel.Design.Serialization;
+=======
+>>>>>>> 04dca1956c81afb3f69fa8a31e7650d93d3eafe6
 
 namespace Test
 {
 	public partial class TestControl : UserControl
 	{
+<<<<<<< HEAD
 		[DesignerSerializationVisibility(DesignerSerializationVisibility.Visible)]
 		public State MyState
 		{
@@ -60,5 +64,22 @@ namespace Test
 
 			return base.ConvertTo(context, culture, value, destinationType);
 		}
+=======
+		[Category("Nobody")]
+		public State MyState
+		{
+			get; set;
+		}
+		 = new State();
+
+		[Category("Nobody")]
+		public State[] MyStates { get; set; }
+	}
+
+	[TypeConverter(typeof(ExpandableObjectConverter))]
+	public class State
+	{
+		public int Data { get; set; }
+>>>>>>> 04dca1956c81afb3f69fa8a31e7650d93d3eafe6
 	}
 }

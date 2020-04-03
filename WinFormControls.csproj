@@ -58,8 +58,8 @@
     <Compile Include="ImageButton\ImageButton.cs">
       <SubType>UserControl</SubType>
     </Compile>
-    <Compile Include="ImageButton\ImageButton.Designer.cs">
-      <DependentUpon>ImageButton.cs</DependentUpon>
+    <Compile Include="ImageCheckbox\ImageCheckbox.cs">
+      <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="TextBoxWithLabel\TextboxWithLabel.cs">
       <SubType>UserControl</SubType>
