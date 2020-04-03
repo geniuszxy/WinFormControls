@@ -28,53 +28,53 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.imageButton2 = new ImageButton.ImageButton();
-			this.imageButton1 = new ImageButton.ImageButton();
+			System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
+			this.button1 = new System.Windows.Forms.Button();
+			this.autoScrollTextBox1 = new WinFormControls.AutoScrollTextBox();
 			this.SuspendLayout();
 			// 
-			// imageButton2
+			// button1
 			// 
-			this.imageButton2.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-			this.imageButton2.Image = global::Test.Properties.Resources._002;
-			this.imageButton2.Location = new System.Drawing.Point(190, 12);
-			this.imageButton2.Name = "imageButton2";
-			this.imageButton2.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(0)))));
-			this.imageButton2.PressColor = System.Drawing.Color.FromArgb(((int)(((byte)(128)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
-			this.imageButton2.ResizeImage = false;
-			this.imageButton2.Size = new System.Drawing.Size(84, 85);
-			this.imageButton2.TabIndex = 1;
-			this.imageButton2.TintAdditive = false;
+			this.button1.Location = new System.Drawing.Point(12, 12);
+			this.button1.Name = "button1";
+			this.button1.Size = new System.Drawing.Size(75, 23);
+			this.button1.TabIndex = 1;
+			this.button1.Text = "button1";
+			this.button1.UseVisualStyleBackColor = true;
+			this.button1.Click += new System.EventHandler(this.button1_Click);
 			// 
-			// imageButton1
+			// autoScrollTextBox1
 			// 
-			this.imageButton1.HoverColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
-			this.imageButton1.Image = global::Test.Properties.Resources._001;
-			this.imageButton1.Location = new System.Drawing.Point(12, 12);
-			this.imageButton1.Name = "imageButton1";
-			this.imageButton1.NormalColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(255)))), ((int)(((byte)(255)))));
-			this.imageButton1.PressColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(0)))), ((int)(((byte)(255)))));
-			this.imageButton1.ResizeImage = true;
-			this.imageButton1.Size = new System.Drawing.Size(143, 283);
-			this.imageButton1.TabIndex = 0;
-			this.imageButton1.TintAdditive = true;
+			this.autoScrollTextBox1.AcceptsReturn = true;
+			this.autoScrollTextBox1.AcceptsTab = true;
+			this.autoScrollTextBox1.AllowDrop = true;
+			this.autoScrollTextBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.autoScrollTextBox1.Location = new System.Drawing.Point(0, 0);
+			this.autoScrollTextBox1.Multiline = true;
+			this.autoScrollTextBox1.Name = "autoScrollTextBox1";
+			this.autoScrollTextBox1.ScrollBars = System.Windows.Forms.ScrollBars.Vertical;
+			this.autoScrollTextBox1.Size = new System.Drawing.Size(265, 163);
+			this.autoScrollTextBox1.TabIndex = 0;
+			this.autoScrollTextBox1.Text = resources.GetString("autoScrollTextBox1.Text");
 			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(800, 450);
-			this.Controls.Add(this.imageButton2);
-			this.Controls.Add(this.imageButton1);
+			this.ClientSize = new System.Drawing.Size(265, 163);
+			this.Controls.Add(this.button1);
+			this.Controls.Add(this.autoScrollTextBox1);
 			this.Name = "Form1";
 			this.Text = "Form1";
 			this.ResumeLayout(false);
+			this.PerformLayout();
 
 		}
 
 		#endregion
 
-		private ImageButton.ImageButton imageButton2;
-		private ImageButton.ImageButton imageButton1;
+		private WinFormControls.AutoScrollTextBox autoScrollTextBox1;
+		private System.Windows.Forms.Button button1;
 	}
 }
 

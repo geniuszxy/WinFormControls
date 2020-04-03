@@ -16,5 +16,10 @@ namespace Test
 		{
 			InitializeComponent();
 		}
+
+		private void button1_Click(object sender, EventArgs e)
+		{
+			autoScrollTextBox1.Multiline = !autoScrollTextBox1.Multiline;
+		}
 	}
 }
