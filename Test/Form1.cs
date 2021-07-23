@@ -17,9 +17,25 @@ namespace Test
 			InitializeComponent();
 		}
 
-		private void button1_Click(object sender, EventArgs e)
+		class Item : WinFormControls.ISimpleListBoxItem
 		{
-			autoScrollTextBox1.Multiline = !autoScrollTextBox1.Multiline;
+			public string value;
+
+			public void Draw(Graphics g)
+			{
+				g.DrawString(value, SystemFonts.DefaultFont, SystemBrushes.InfoText, 0, 0);
+			}
+		}
+
+		protected override void OnLoad(EventArgs e)
+		{
+			base.OnLoad(e);
+
+			simpleListBox1.AddItem(new Item { value = "1" });
+			simpleListBox1.AddItem(new Item { value = "2" });
+			simpleListBox1.AddItem(new Item { value = "3" });
+			simpleListBox1.AddItem(new Item { value = "-------------" });
+			simpleListBox1.AddItem(new Item { value = "5" });
 		}
 	}
 }
