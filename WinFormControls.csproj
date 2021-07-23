@@ -67,7 +67,6 @@
     <Compile Include="SimpleListBox\SimpleListBox.Designer.cs">
       <DependentUpon>SimpleListBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="SimpleListBox\ISimpleListBoxItem.cs" />
     <Compile Include="TextBoxWithLabel\TextboxWithLabel.cs">
       <SubType>UserControl</SubType>
     </Compile>
