@@ -30,10 +30,10 @@ namespace WinFormControls
 		public SimpleListBox()
 		{
 			_items = new ArrayList();
-		
-			InitializeComponent();
-
+			_selectIndex = -1;
 			_itemHeight = (int)Font.GetHeight() + 2;
+
+			InitializeComponent();
 		}
 
 		/// <summary>
@@ -42,6 +42,7 @@ namespace WinFormControls
 		public void AddItem(object item)
 		{
 			_items.Add(item);
+			CheckScrollbar();
 			Invalidate();
 		}
 
@@ -77,9 +78,32 @@ namespace WinFormControls
 			return _items[index];
 		}
 
+		/// <summary>
+		/// Get item count
+		/// </summary>
 		public int ItemCount
 		{
 			get { return _items.Count; }
+		}
+
+		/// <summary>
+		/// 修改selectIndex
+		/// </summary>
+		private void Select(int index)
+		{
+			if (_selectIndex == index)
+				return;
+
+			_selectIndex = index;
+			Invalidate();
+		}
+
+		/// <summary>
+		/// 检查是否要显示滚动条
+		/// </summary>
+		private void CheckScrollbar()
+		{
+
 		}
 
 		protected override void OnPaint(PaintEventArgs e)
@@ -118,6 +142,64 @@ namespace WinFormControls
 				g.TranslateTransform(0, itemHeight);
 				g.TranslateClip(0, _itemHeight);
 			}
+		}
+
+		protected override void OnMouseDown(MouseEventArgs e)
+		{
+			base.OnMouseDown(e);
+
+			if (e.Button != MouseButtons.Left)
+				return;
+
+			int itemCount = _items.Count;
+			if (itemCount == 0)
+				return;
+
+			var loc = e.Location;
+			var rDisplay = DisplayRectangle;
+			if (!rDisplay.Contains(loc))
+				return;
+
+			//select
+			int select = (loc.Y - rDisplay.Top) / _itemHeight;
+			select += _topIndex;
+			if (select < itemCount)
+				Select(select);
+		}
+
+		protected override bool ProcessCmdKey(ref Message msg, Keys keyData)
+		{
+			int itemCount = _items.Count;
+			if (itemCount > 0)
+			{
+				switch (keyData)
+				{
+					case Keys.Up:
+						if (_selectIndex > 0)
+						{
+							Select(_selectIndex - 1);
+							return true;
+						}
+						break;
+
+					case Keys.Down:
+						if (_selectIndex < itemCount - 1)
+						{
+							Select(_selectIndex + 1);
+							return true;
+						}
+						break;
+				}
+			}
+
+			return base.ProcessCmdKey(ref msg, keyData);
+		}
+
+		protected override void OnMouseWheel(MouseEventArgs e)
+		{
+			base.OnMouseWheel(e);
+
+
 		}
 	}
 }
