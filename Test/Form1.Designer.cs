@@ -33,17 +33,19 @@
 			// 
 			// simpleListBox1
 			// 
-			this.simpleListBox1.Dock = System.Windows.Forms.DockStyle.Fill;
+			this.simpleListBox1.AutoScroll = true;
+			this.simpleListBox1.ItemHeight = 11;
 			this.simpleListBox1.Location = new System.Drawing.Point(0, 0);
 			this.simpleListBox1.Name = "simpleListBox1";
-			this.simpleListBox1.Size = new System.Drawing.Size(465, 468);
+			this.simpleListBox1.Padding = new System.Windows.Forms.Padding(10);
+			this.simpleListBox1.Size = new System.Drawing.Size(245, 190);
 			this.simpleListBox1.TabIndex = 0;
 			// 
 			// Form1
 			// 
 			this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
 			this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-			this.ClientSize = new System.Drawing.Size(465, 468);
+			this.ClientSize = new System.Drawing.Size(865, 591);
 			this.Controls.Add(this.simpleListBox1);
 			this.Name = "Form1";
 			this.Text = "Form1";

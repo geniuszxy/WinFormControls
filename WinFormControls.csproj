@@ -82,6 +82,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Include="SimpleListBox\SimpleListBox.resx">
+      <DependentUpon>SimpleListBox.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="TextBoxWithLabel\TextboxWithLabel.resx">
       <DependentUpon>TextboxWithLabel.cs</DependentUpon>
     </EmbeddedResource>

@@ -1,11 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Test
@@ -17,25 +10,20 @@ namespace Test
 			InitializeComponent();
 		}
 
-		class Item : WinFormControls.ISimpleListBoxItem
-		{
-			public string value;
-
-			public void Draw(Graphics g)
-			{
-				g.DrawString(value, SystemFonts.DefaultFont, SystemBrushes.InfoText, 0, 0);
-			}
-		}
-
 		protected override void OnLoad(EventArgs e)
 		{
 			base.OnLoad(e);
 
-			simpleListBox1.AddItem(new Item { value = "1" });
-			simpleListBox1.AddItem(new Item { value = "2" });
-			simpleListBox1.AddItem(new Item { value = "3" });
-			simpleListBox1.AddItem(new Item { value = "-------------" });
-			simpleListBox1.AddItem(new Item { value = "5" });
+			var items = new string[]
+			{
+				"1",
+				"2",
+				"3",
+				"-------------",
+				"5",
+			};
+
+			simpleListBox1.AddItems(items);
 		}
 	}
 }
