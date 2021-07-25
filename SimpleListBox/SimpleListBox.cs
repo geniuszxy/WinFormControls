@@ -43,7 +43,6 @@ namespace WinFormControls
 		{
 			_items.Add(item);
 			CheckScrollbar();
-			Invalidate();
 		}
 
 		/// <summary>
@@ -52,24 +51,31 @@ namespace WinFormControls
 		public void AddItems(ICollection items)
 		{
 			_items.AddRange(items);
-			Invalidate();
+			CheckScrollbar();
 		}
 
 		public void InsertItem(object item, int index)
 		{
 			_items.Insert(index, item);
-			Invalidate();
+			CheckScrollbar();
 		}
 
 		public void RemoveItemAt(int index)
 		{
 			_items.RemoveAt(index);
-			Invalidate();
+			CheckScrollbar();
 		}
 
+		/// <summary>
+		/// Remove all items
+		/// </summary>
 		public void ClearItems()
 		{
 			_items.Clear();
+			_topIndex = 0;
+			_selectIndex = -1;
+			if (VScroll)
+				VerticalScroll.Visible = false;
 			Invalidate();
 		}
 
@@ -103,7 +109,11 @@ namespace WinFormControls
 		/// </summary>
 		private void CheckScrollbar()
 		{
+			int count = _items.Count;
 
+
+
+			Invalidate();
 		}
 
 		protected override void OnPaint(PaintEventArgs e)
@@ -115,10 +125,11 @@ namespace WinFormControls
 				return;
 
 			var g = e.Graphics;
-			var rect = DisplayRectangle;
+			var size = ClientSize;
+			var padding = Padding;
 			var font = Font;
 			float itemHeight = _itemHeight;
-			int indexMax = (int)Math.Floor(ClientSize.Height / itemHeight) + _topIndex;
+			int indexMax = (int)Math.Floor(size.Height / itemHeight) + _topIndex;
 			if (indexMax > itemCount)
 				indexMax = itemCount;
 			var foreBrush = new SolidBrush(ForeColor);
@@ -126,22 +137,22 @@ namespace WinFormControls
 			var selectedBackBrush = SystemBrushes.Highlight;
 
 			g.TranslateTransform(rect.X, rect.Y);
-			g.SetClip(new Rectangle(0, 0, rect.Width, _itemHeight));
+			//g.SetClip(new Rectangle(0, 0, rect.Width, _itemHeight));
 
-			for (int i = _topIndex; i < indexMax; i++)
-			{
-				var item = _items[i];
-				if(_selectIndex == i)
-				{
-					g.FillRectangle(selectedBackBrush, 0, 0, rect.Width, _itemHeight);
-					g.DrawString(item.ToString(), font, selectedBrush, 0, 0);
-				}
-				else
-					g.DrawString(item.ToString(), font, foreBrush, 0, 0);
+			//for (int i = _topIndex; i < indexMax; i++)
+			//{
+			//	var item = _items[i];
+			//	if(_selectIndex == i)
+			//	{
+			//		g.FillRectangle(selectedBackBrush, 0, 0, rect.Width, _itemHeight);
+			//		g.DrawString(item.ToString(), font, selectedBrush, 0, 0);
+			//	}
+			//	else
+			//		g.DrawString(item.ToString(), font, foreBrush, 0, 0);
 
-				g.TranslateTransform(0, itemHeight);
-				g.TranslateClip(0, _itemHeight);
-			}
+			//	g.TranslateTransform(0, itemHeight);
+			//	g.TranslateClip(0, _itemHeight);
+			//}
 		}
 
 		protected override void OnMouseDown(MouseEventArgs e)
@@ -193,13 +204,6 @@ namespace WinFormControls
 			}
 
 			return base.ProcessCmdKey(ref msg, keyData);
-		}
-
-		protected override void OnMouseWheel(MouseEventArgs e)
-		{
-			base.OnMouseWheel(e);
-
-
 		}
 	}
 }
