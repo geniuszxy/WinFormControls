@@ -37,7 +37,6 @@
 			// 
 			// simpleListBox1
 			// 
-			this.simpleListBox1.AutoScroll = true;
 			this.simpleListBox1.BackColor = System.Drawing.SystemColors.ControlDark;
 			this.simpleListBox1.ItemHeight = 15;
 			this.simpleListBox1.Location = new System.Drawing.Point(193, 104);

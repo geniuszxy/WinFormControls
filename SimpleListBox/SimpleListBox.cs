@@ -27,11 +27,23 @@ namespace WinFormControls
 			set { _itemHeight = value; Invalidate(); }
 		}
 
+		#region Hidden
+
+		[Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
+		public override bool AutoScroll
+		{
+			get { return true; }
+			set { }
+		}
+
+		#endregion
+
 		public SimpleListBox()
 		{
 			_items = new ArrayList();
 			_selectIndex = -1;
 			_itemHeight = (int)Font.GetHeight() + 2;
+			base.AutoScroll = true;
 
 			InitializeComponent();
 		}
@@ -42,7 +54,7 @@ namespace WinFormControls
 		public void AddItem(object item)
 		{
 			_items.Add(item);
-			CheckScrollbar();
+			CheckAutoSize();
 		}
 
 		/// <summary>
@@ -51,19 +63,19 @@ namespace WinFormControls
 		public void AddItems(ICollection items)
 		{
 			_items.AddRange(items);
-			CheckScrollbar();
+			CheckAutoSize();
 		}
 
 		public void InsertItem(object item, int index)
 		{
 			_items.Insert(index, item);
-			CheckScrollbar();
+			CheckAutoSize();
 		}
 
 		public void RemoveItemAt(int index)
 		{
 			_items.RemoveAt(index);
-			CheckScrollbar();
+			CheckAutoSize();
 		}
 
 		/// <summary>
@@ -74,8 +86,8 @@ namespace WinFormControls
 			_items.Clear();
 			_topIndex = 0;
 			_selectIndex = -1;
-			if (VScroll)
-				VerticalScroll.Visible = false;
+			AutoScrollMinSize = Size.Empty;
+			AutoScrollPosition = Point.Empty;
 			Invalidate();
 		}
 
@@ -107,12 +119,11 @@ namespace WinFormControls
 		/// <summary>
 		/// 检查是否要显示滚动条
 		/// </summary>
-		private void CheckScrollbar()
+		private void CheckAutoSize()
 		{
 			int count = _items.Count;
-
-
-
+			int height = _itemHeight * count + Padding.Vertical;
+			AutoScrollMinSize = new Size(1, height);
 			Invalidate();
 		}
 
@@ -125,26 +136,43 @@ namespace WinFormControls
 				return;
 
 			var g = e.Graphics;
-			var size = ClientSize;
+			var position = AutoScrollPosition;
 			var padding = Padding;
-			var font = Font;
-			float itemHeight = _itemHeight;
-			int indexMax = (int)Math.Floor(size.Height / itemHeight) + _topIndex;
-			if (indexMax > itemCount)
-				indexMax = itemCount;
+			var size = ClientSize;
+			var startY = padding.Top - position.Y;
+			var height = size.Height - padding.Vertical;
+
+			var startIndex = startY / _itemHeight;
+			var endIndex = (startY + height) / _itemHeight;
+
+
+
+			//size.Width -= padding.Horizontal;
+			//size.Height -= padding.Vertical;
+			//var font = Font;
+			//float itemHeight = _itemHeight;
+			//int indexMax = (int)Math.Floor(size.Height / itemHeight) + _topIndex;
+			//if (indexMax > itemCount)
+			//	indexMax = itemCount;
 			var foreBrush = new SolidBrush(ForeColor);
 			var selectedBrush = SystemBrushes.HighlightText;
-			var selectedBackBrush = SystemBrushes.Highlight;
+			//var selectedBackBrush = SystemBrushes.Highlight;
 
-			g.TranslateTransform(rect.X, rect.Y);
-			//g.SetClip(new Rectangle(0, 0, rect.Width, _itemHeight));
+			g.FillEllipse(selectedBrush, 0, 0, 10, 10);
+
+
+			//g.TranslateTransform(padding.Left, padding.Top);
+			//g.SetClip(new Rectangle(0, 0, size.Width, _itemHeight));
+			g.FillRectangle(foreBrush, padding.Left, startIndex * _itemHeight, size.Width - padding.Horizontal, _itemHeight);
+
+			Console.WriteLine((startIndex * _itemHeight) + ", " + position.Y);
 
 			//for (int i = _topIndex; i < indexMax; i++)
 			//{
 			//	var item = _items[i];
-			//	if(_selectIndex == i)
+			//	if (_selectIndex == i)
 			//	{
-			//		g.FillRectangle(selectedBackBrush, 0, 0, rect.Width, _itemHeight);
+			//		g.FillRectangle(selectedBackBrush, 0, 0, size.Width, _itemHeight);
 			//		g.DrawString(item.ToString(), font, selectedBrush, 0, 0);
 			//	}
 			//	else
@@ -204,6 +232,11 @@ namespace WinFormControls
 			}
 
 			return base.ProcessCmdKey(ref msg, keyData);
+		}
+
+		protected override void OnScroll(ScrollEventArgs se)
+		{
+			base.OnScroll(se);
 		}
 	}
 }
