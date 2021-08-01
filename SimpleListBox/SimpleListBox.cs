@@ -11,8 +11,10 @@ using System.Windows.Forms;
 
 namespace WinFormControls
 {
-	public partial class SimpleListBox : UserControl
+	public partial class SimpleListBox : UserControl, IEnumerable
 	{
+		#region Properties
+
 		private ArrayList _items;
 		private int _selectIndex;
 		private int _itemHeight;
@@ -39,10 +41,27 @@ namespace WinFormControls
 			get { return base.AutoScrollPosition; }
 			set
 			{
-				base.AutoScrollPosition = value;
-				OnScrollPositionChanged();
+				// See: https://docs.microsoft.com/en-us/dotnet/api/system.windows.forms.scrollablecontrol.autoscrollposition?view=net-5.0#remarks
+				value.X = -value.X;
+				value.Y = -value.Y;
+
+				if (base.AutoScrollPosition != value)
+				{
+					base.AutoScrollPosition = value;
+					OnScrollPositionChanged();
+				}
 			}
 		}
+
+		/// <summary>
+		/// Selected index
+		/// </summary>
+		public int SelectedIndex
+		{
+			get { return _selectIndex; }
+		}
+
+		#endregion
 
 		#region Hidden
 
@@ -60,6 +79,8 @@ namespace WinFormControls
 		}
 
 		#endregion
+
+		#region Methods
 
 		public SimpleListBox()
 		{
@@ -156,6 +177,13 @@ namespace WinFormControls
 			Invalidate();
 		}
 
+		public IEnumerator GetEnumerator()
+		{
+			return _items.GetEnumerator();
+		}
+
+		#endregion
+
 		#region Events
 
 		protected override void OnPaint(PaintEventArgs e)
@@ -193,13 +221,14 @@ namespace WinFormControls
 			for (int i = startIndex; i <= endIndex; i++)
 			{
 				var item = _items[i];
+				var r = new RectangleF(0, 0, size.Width, _itemHeight);
 				if (_selectIndex == i)
 				{
-					g.FillRectangle(selectedBackBrush, 0, 0, size.Width, _itemHeight);
-					g.DrawString(item.ToString(), font, selectedBrush, 0, 0);
+					g.FillRectangle(selectedBackBrush, r);
+					g.DrawString(item.ToString(), font, selectedBrush, r);
 				}
 				else
-					g.DrawString(item.ToString(), font, foreBrush, 0, 0);
+					g.DrawString(item.ToString(), font, foreBrush, r);
 
 				g.TranslateTransform(0, _itemHeight);
 				//g.TranslateClip(0, _itemHeight);
