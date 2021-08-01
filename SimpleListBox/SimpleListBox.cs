@@ -44,6 +44,7 @@ namespace WinFormControls
 			_selectIndex = -1;
 			_itemHeight = (int)Font.GetHeight() + 2;
 			base.AutoScroll = true;
+			DoubleBuffered = true;
 
 			InitializeComponent();
 		}
@@ -136,51 +137,43 @@ namespace WinFormControls
 				return;
 
 			var g = e.Graphics;
-			var position = AutoScrollPosition;
 			var padding = Padding;
 			var size = ClientSize;
-			var startY = padding.Top - position.Y;
-			var height = size.Height - padding.Vertical;
+			var y = -AutoScrollPosition.Y;
 
-			var startIndex = startY / _itemHeight;
-			var endIndex = (startY + height) / _itemHeight;
+			size.Width -= padding.Horizontal;
+			size.Height -= padding.Vertical;
 
+			var startIndex = y / _itemHeight;
+			var endIndex = (y + size.Height) / _itemHeight;
+			if (endIndex >= itemCount)
+				endIndex = itemCount - 1;
+			if (startIndex > endIndex)
+				startIndex = endIndex;
 
-
-			//size.Width -= padding.Horizontal;
-			//size.Height -= padding.Vertical;
-			//var font = Font;
-			//float itemHeight = _itemHeight;
-			//int indexMax = (int)Math.Floor(size.Height / itemHeight) + _topIndex;
-			//if (indexMax > itemCount)
-			//	indexMax = itemCount;
+			var font = Font;
 			var foreBrush = new SolidBrush(ForeColor);
 			var selectedBrush = SystemBrushes.HighlightText;
-			//var selectedBackBrush = SystemBrushes.Highlight;
+			var selectedBackBrush = SystemBrushes.Highlight;
 
-			g.FillEllipse(selectedBrush, 0, 0, 10, 10);
-
-
-			//g.TranslateTransform(padding.Left, padding.Top);
+			g.SetClip(new Rectangle(padding.Left, padding.Top, size.Width, size.Height));
+			g.TranslateTransform(padding.Left, padding.Top - y + startIndex * _itemHeight);
 			//g.SetClip(new Rectangle(0, 0, size.Width, _itemHeight));
-			g.FillRectangle(foreBrush, padding.Left, startIndex * _itemHeight, size.Width - padding.Horizontal, _itemHeight);
 
-			Console.WriteLine((startIndex * _itemHeight) + ", " + position.Y);
+			for (int i = startIndex; i <= endIndex; i++)
+			{
+				var item = _items[i];
+				if (_selectIndex == i)
+				{
+					g.FillRectangle(selectedBackBrush, 0, 0, size.Width, _itemHeight);
+					g.DrawString(item.ToString(), font, selectedBrush, 0, 0);
+				}
+				else
+					g.DrawString(item.ToString(), font, foreBrush, 0, 0);
 
-			//for (int i = _topIndex; i < indexMax; i++)
-			//{
-			//	var item = _items[i];
-			//	if (_selectIndex == i)
-			//	{
-			//		g.FillRectangle(selectedBackBrush, 0, 0, size.Width, _itemHeight);
-			//		g.DrawString(item.ToString(), font, selectedBrush, 0, 0);
-			//	}
-			//	else
-			//		g.DrawString(item.ToString(), font, foreBrush, 0, 0);
-
-			//	g.TranslateTransform(0, itemHeight);
-			//	g.TranslateClip(0, _itemHeight);
-			//}
+				g.TranslateTransform(0, _itemHeight);
+				//g.TranslateClip(0, _itemHeight);
+			}
 		}
 
 		protected override void OnMouseDown(MouseEventArgs e)
@@ -237,6 +230,7 @@ namespace WinFormControls
 		protected override void OnScroll(ScrollEventArgs se)
 		{
 			base.OnScroll(se);
+			Invalidate();
 		}
 	}
 }

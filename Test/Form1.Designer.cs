@@ -28,22 +28,12 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-			this.simpleListBox1 = new WinFormControls.SimpleListBox();
 			this.button1 = new System.Windows.Forms.Button();
 			this.button2 = new System.Windows.Forms.Button();
 			this.button3 = new System.Windows.Forms.Button();
 			this.button4 = new System.Windows.Forms.Button();
+			this.simpleListBox1 = new WinFormControls.SimpleListBox();
 			this.SuspendLayout();
-			// 
-			// simpleListBox1
-			// 
-			this.simpleListBox1.BackColor = System.Drawing.SystemColors.ControlDark;
-			this.simpleListBox1.ItemHeight = 15;
-			this.simpleListBox1.Location = new System.Drawing.Point(193, 104);
-			this.simpleListBox1.Name = "simpleListBox1";
-			this.simpleListBox1.Padding = new System.Windows.Forms.Padding(10);
-			this.simpleListBox1.Size = new System.Drawing.Size(245, 190);
-			this.simpleListBox1.TabIndex = 0;
 			// 
 			// button1
 			// 
@@ -80,6 +70,16 @@
 			this.button4.TabIndex = 1;
 			this.button4.Text = "button1";
 			this.button4.UseVisualStyleBackColor = true;
+			// 
+			// simpleListBox1
+			// 
+			this.simpleListBox1.AutoScroll = true;
+			this.simpleListBox1.ItemHeight = 15;
+			this.simpleListBox1.Location = new System.Drawing.Point(193, 104);
+			this.simpleListBox1.Name = "simpleListBox1";
+			this.simpleListBox1.Padding = new System.Windows.Forms.Padding(10);
+			this.simpleListBox1.Size = new System.Drawing.Size(245, 190);
+			this.simpleListBox1.TabIndex = 0;
 			// 
 			// Form1
 			// 
