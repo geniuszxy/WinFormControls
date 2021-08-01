@@ -15,8 +15,12 @@ namespace WinFormControls
 	{
 		private ArrayList _items;
 		private int _selectIndex;
-		private int _topIndex;
 		private int _itemHeight;
+
+		/// <summary>
+		/// Scroll position changed event
+		/// </summary>
+		public event EventHandler ScrollPositionChanged;
 
 		/// <summary>
 		/// Height of each item
@@ -27,12 +31,31 @@ namespace WinFormControls
 			set { _itemHeight = value; Invalidate(); }
 		}
 
+		/// <summary>
+		/// Scroll position of content
+		/// </summary>
+		public Point ScrollPosition
+		{
+			get { return base.AutoScrollPosition; }
+			set
+			{
+				base.AutoScrollPosition = value;
+				OnScrollPositionChanged();
+			}
+		}
+
 		#region Hidden
 
 		[Browsable(false), EditorBrowsable(EditorBrowsableState.Never)]
 		public override bool AutoScroll
 		{
 			get { return true; }
+			set { }
+		}
+
+		private new Point AutoScrollPosition
+		{
+			get { return Point.Empty; }
 			set { }
 		}
 
@@ -85,10 +108,9 @@ namespace WinFormControls
 		public void ClearItems()
 		{
 			_items.Clear();
-			_topIndex = 0;
 			_selectIndex = -1;
 			AutoScrollMinSize = Size.Empty;
-			AutoScrollPosition = Point.Empty;
+			base.AutoScrollPosition = Point.Empty;
 			Invalidate();
 		}
 
@@ -128,6 +150,14 @@ namespace WinFormControls
 			Invalidate();
 		}
 
+		private void OnScrollPositionChanged()
+		{
+			ScrollPositionChanged?.Invoke(this, EventArgs.Empty);
+			Invalidate();
+		}
+
+		#region Events
+
 		protected override void OnPaint(PaintEventArgs e)
 		{
 			base.OnPaint(e);
@@ -139,7 +169,7 @@ namespace WinFormControls
 			var g = e.Graphics;
 			var padding = Padding;
 			var size = ClientSize;
-			var y = -AutoScrollPosition.Y;
+			var y = -base.AutoScrollPosition.Y;
 
 			size.Width -= padding.Horizontal;
 			size.Height -= padding.Vertical;
@@ -194,7 +224,6 @@ namespace WinFormControls
 
 			//select
 			int select = (loc.Y - rDisplay.Top) / _itemHeight;
-			select += _topIndex;
 			if (select < itemCount)
 				Select(select);
 		}
@@ -230,7 +259,15 @@ namespace WinFormControls
 		protected override void OnScroll(ScrollEventArgs se)
 		{
 			base.OnScroll(se);
-			Invalidate();
+			OnScrollPositionChanged();
 		}
+
+		protected override void OnMouseWheel(MouseEventArgs e)
+		{
+			base.OnMouseWheel(e);
+			OnScrollPositionChanged();
+		}
+
+		#endregion
 	}
 }

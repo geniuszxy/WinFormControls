@@ -92,7 +92,7 @@
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\WinFormControls.csproj">
-      <Project>{55d03ce3-be9a-45db-ad7b-fbaf27484bf1}</Project>
+      <Project>{c4f2d5e3-b023-4b45-bcce-9d14f4d7811c}</Project>
       <Name>WinFormControls</Name>
     </ProjectReference>
   </ItemGroup>
